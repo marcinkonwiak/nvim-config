@@ -212,7 +212,7 @@ return {
   },
   {
     'RRethy/vim-illuminate',
-    event = { id = 'LazyFile', event = 'User', pattern = 'LazyFile' },
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     opts = {
       delay = 100,
       large_file_cutoff = 2000,
@@ -235,6 +235,23 @@ return {
     keys = {
       { ']]', desc = 'Next Reference' },
       { '[[', desc = 'Prev Reference' },
+    },
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
+    enabled = true,
+    opts = { mode = 'cursor', max_lines = 3 },
+    keys = {
+      {
+        '<leader>ut',
+        function()
+          local tsc = require 'treesitter-context'
+          tsc.toggle()
+        end,
+        desc = 'Toggle Treesitter Context',
+      },
     },
   },
 }
