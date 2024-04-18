@@ -5,5 +5,20 @@ return {
     -- See `:help ibl`
     main = 'ibl',
     opts = {},
+    config = {
+      exclude = {
+        filetypes = {
+          'lspinfo',
+          'packer',
+          'checkhealth',
+          'help',
+          'man',
+          'gitcommit',
+          'TelescopePrompt',
+          'TelescopeResults',
+          'dashboard',
+        },
+      },
+    },
   },
 }
