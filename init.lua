@@ -68,12 +68,16 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.opt.wrap = false
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.keymap.set('n', '<leader>uw', '<cmd>set wrap!<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -113,6 +117,10 @@ vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })
 vim.keymap.set('n', ']q', vim.cmd.cnext, { desc = 'Next Quickfix' })
 
 vim.keymap.set('n', '<leader>ui', vim.show_pos, { desc = 'Inspect Pos' })
+vim.keymap.set('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -154,6 +162,7 @@ require('lazy').setup({
         ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
         ['<leader>gh'] = { name = '[H]unk', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Lists', _ = 'which_key_ignore' },
+        ['<leader><tab>'] = { name = 'Tabs', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -181,6 +190,10 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+        -- defaults = {
+        --   layout_strategy = 'horizontal',
+        --   layout_config = { width = 0.5 },
+        -- },
       }
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
@@ -191,6 +204,12 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>pns', builtin.builtin, { desc = 'Search Select Telescope' })
       vim.keymap.set('n', '<leader>pd', builtin.diagnostics, { desc = 'Search Diagnostics' })
       vim.keymap.set('n', '<leader>pr', builtin.resume, { desc = 'Search Resume' })
+
+      vim.keymap.set('n', '<leader>pnc', function()
+        builtin.colorscheme {
+          enable_preview = true,
+        }
+      end, { desc = 'Browse colorscheme' })
 
       vim.keymap.set('n', '<leader>w', builtin.buffers, { desc = 'Find existing buffers' })
 
@@ -342,18 +361,24 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  { 'rebelot/kanagawa.nvim' },
+  { 'folke/tokyonight.nvim' },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    -- priority = 1000,
+    -- init = function()
+    --   vim.cmd.colorscheme 'catppuccin-macchiato'
+    --   -- You can configure highlights by doing something like:
+    --   vim.cmd.hi 'Comment gui=none'
+    -- end,
+  },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    priority = 1000,
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'rose-pine-moon'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
