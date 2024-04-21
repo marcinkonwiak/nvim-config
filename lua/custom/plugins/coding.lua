@@ -3,7 +3,7 @@ return {
   -- auto completion
   {
     'hrsh7th/nvim-cmp',
-    version = false, -- last release is way too old
+    -- version = false, -- last release is way too old
     event = 'InsertEnter',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
@@ -35,9 +35,9 @@ return {
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ['<S-CR>'] = cmp.mapping.confirm {
+          ['<Esc>'] = cmp.mapping.abort(),
+          ['<tab>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
