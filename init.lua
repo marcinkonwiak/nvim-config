@@ -183,17 +183,37 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
+    -- opts = function()
+    --   local actions = require 'telescope.actions'
+    --   return {
+    --     extensions = {
+    --       ['ui-select'] = {
+    --         require('telescope.themes').get_dropdown(),
+    --       },
+    --     },
+    --     mappings = {
+    --       i = {
+    --         ['<C-d>'] = actions.delete_buffer + actions.move_to_top,
+    --       },
+    --     },
+    --   }
+    -- end,
     config = function()
+      local actions = require 'telescope.actions'
       require('telescope').setup {
+
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
         },
-        -- defaults = {
-        --   layout_strategy = 'horizontal',
-        --   layout_config = { width = 0.5 },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              ['q'] = actions.delete_buffer + actions.move_to_top,
+            },
+          },
+        },
       }
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
@@ -205,24 +225,24 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>pd', builtin.diagnostics, { desc = 'Search Diagnostics' })
       vim.keymap.set('n', '<leader>pr', builtin.resume, { desc = 'Search Resume' })
 
-      vim.keymap.set('n', '<leader>pnc', function()
-        builtin.colorscheme {
-          enable_preview = true,
-        }
-      end, { desc = 'Browse colorscheme' })
-
       vim.keymap.set('n', '<leader>w', builtin.buffers, { desc = 'Find existing buffers' })
 
       vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Search Files' })
       vim.keymap.set('n', '<leader>po', builtin.git_files, { desc = 'Search Git Files' })
-      vim.keymap.set('n', '<leader>pe', builtin.oldfiles, { desc = 'Search Recent Files' })
+      vim.keymap.set('n', '<leader>pE', builtin.oldfiles, { desc = 'Search Recent Files' })
       vim.keymap.set('n', '<leader>pp', builtin.live_grep, { desc = 'Search by Grep' })
       vim.keymap.set('n', '<leader>pw', builtin.grep_string, { desc = 'Search current Word' })
+
+      vim.keymap.set('n', '<leader>pk', function() end, { desc = 'Search Files (cwd)' })
 
       vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = 'Commits' })
       vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Status' })
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Branches' })
       vim.keymap.set('n', '<leader>gp', builtin.git_stash, { desc = 'Stash' })
+
+      vim.keymap.set('n', '<leader>pe', function()
+        builtin.oldfiles { cwd_only = true }
+      end, { desc = 'Search Recent Files (cwd)' })
 
       vim.keymap.set('n', '<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -241,6 +261,12 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>pnn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      vim.keymap.set('n', '<leader>pnc', function()
+        builtin.colorscheme {
+          enable_preview = true,
+        }
+      end, { desc = 'Browse colorscheme' })
     end,
   },
 
