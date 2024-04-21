@@ -316,6 +316,9 @@ require('lazy').setup({
               callback = vim.lsp.buf.clear_references,
             })
           end
+          if client.name == 'ruff_lsp' then
+            client.server_capabilities.hoverProvider = false
+          end
         end,
       })
 
@@ -323,8 +326,6 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        -- gopls = {},
-        -- pyright = {},
         lua_ls = {
           settings = {
             Lua = {

@@ -153,19 +153,17 @@ return {
 
   -- auto pairs
   {
-    'echasnovski/mini.pairs',
-    event = 'VeryLazy',
-    opts = {
-      mappings = {
-        ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\`].', register = { cr = false } },
-      },
-    },
-    keys = {
-      {
-        '<leader>up',
-        desc = 'Toggle Auto Pairs',
-      },
-    },
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    -- Optional dependency
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      require('nvim-autopairs').setup {}
+      -- If you want to automatically add `(` after selecting a function or method
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      local cmp = require 'cmp'
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end,
   },
 
   -- Fast and feature-rich surround actions. For text that includes
