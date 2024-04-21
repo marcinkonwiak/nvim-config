@@ -326,6 +326,33 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
+        gopls = {
+          settings = {
+            gopls = {
+              gofumpt = true,
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+              analyses = {
+                fieldalignment = true,
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              usePlaceholders = true,
+              completeUnimported = true,
+              staticcheck = true,
+              directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -383,7 +410,9 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+        go = { 'goimports', 'gofumpt' },
         lua = { 'stylua' },
+        python = { 'ruff_format' },
         -- python = { "isort", "black" },
       },
     },
