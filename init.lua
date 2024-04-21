@@ -181,27 +181,18 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
+      {
+        'nvim-telescope/telescope-live-grep-args.nvim',
+        version = '^1.0.0',
+      },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
-    -- opts = function()
-    --   local actions = require 'telescope.actions'
-    --   return {
-    --     extensions = {
-    --       ['ui-select'] = {
-    --         require('telescope.themes').get_dropdown(),
-    --       },
-    --     },
-    --     mappings = {
-    --       i = {
-    --         ['<C-d>'] = actions.delete_buffer + actions.move_to_top,
-    --       },
-    --     },
-    --   }
-    -- end,
     config = function()
+      local live_grep_args = require('telescope').load_extension 'live_grep_args'
       local actions = require 'telescope.actions'
+      local action_layout = require 'telescope.actions.layout'
+      local live_grep_args_shortcuts = require 'telescope-live-grep-args.shortcuts'
       require('telescope').setup {
-
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -209,8 +200,12 @@ require('lazy').setup({
         },
         defaults = {
           mappings = {
-            i = {
+            n = {
+              ['<M-p>'] = action_layout.toggle_preview,
               ['q'] = actions.delete_buffer + actions.move_to_top,
+            },
+            i = {
+              ['<M-p>'] = action_layout.toggle_preview,
             },
           },
         },
@@ -230,7 +225,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Search Files' })
       vim.keymap.set('n', '<leader>po', builtin.git_files, { desc = 'Search Git Files' })
       vim.keymap.set('n', '<leader>pE', builtin.oldfiles, { desc = 'Search Recent Files' })
-      vim.keymap.set('n', '<leader>pp', builtin.live_grep, { desc = 'Search by Grep' })
+      vim.keymap.set('n', '<leader>pp', live_grep_args.live_grep_args, { desc = 'Search by Grep' })
       vim.keymap.set('n', '<leader>pw', builtin.grep_string, { desc = 'Search current Word' })
 
       vim.keymap.set('n', '<leader>pk', function() end, { desc = 'Search Files (cwd)' })
@@ -240,9 +235,15 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Branches' })
       vim.keymap.set('n', '<leader>gp', builtin.git_stash, { desc = 'Stash' })
 
+      vim.keymap.set('v', '<leader>v', live_grep_args_shortcuts.grep_visual_selection, { desc = 'Grep visual' })
+
       vim.keymap.set('n', '<leader>pe', function()
         builtin.oldfiles { cwd_only = true }
       end, { desc = 'Search Recent Files (cwd)' })
+
+      vim.keymap.set('n', '<leader>pa', function()
+        builtin.find_files { no_ignore = true, hidden = true }
+      end, { desc = '[A]ll files' })
 
       vim.keymap.set('n', '<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
