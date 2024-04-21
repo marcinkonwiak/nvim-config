@@ -9,6 +9,9 @@ return {
         show_end = false,
         show_start = false,
       },
+      indent = {
+        tab_char = '',
+      },
       exclude = {
         filetypes = {
           'lspinfo',
