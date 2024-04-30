@@ -122,6 +122,9 @@ vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
 vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 
+-- Exit
+vim.keymap.set('n', '<leader>Q', '<cmd>q!<cr>', { desc = 'Quit (Force)' })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -261,6 +264,14 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>pnn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
+      end, { desc = '[S]earch [N]eovim files' })
+
+      vim.keymap.set('n', '<leader>cgf', function()
+        builtin.find_files { search_dirs = { '$HOME/go/pkg/mod/' } }
+      end, { desc = '[S]earch [N]eovim files' })
+
+      vim.keymap.set('n', '<leader>cgp', function()
+        builtin.live_grep { search_dirs = { '$HOME/go/pkg/mod/' } }
       end, { desc = '[S]earch [N]eovim files' })
 
       vim.keymap.set('n', '<leader>pnc', function()
