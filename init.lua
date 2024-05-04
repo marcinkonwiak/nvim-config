@@ -92,6 +92,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Resize window using <ctrl> arrow keys
+vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
+vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
+
 vim.keymap.set('n', '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move Down' })
 vim.keymap.set('n', '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move Up' })
 vim.keymap.set('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
@@ -429,28 +435,32 @@ require('lazy').setup({
     },
   },
 
-  { 'rebelot/kanagawa.nvim' },
+  {
+    'rebelot/kanagawa.nvim',
+    -- priority = 1000,
+    -- init = function()
+    --   vim.cmd.colorscheme 'kanagawa'
+    -- end,
+  },
   { 'folke/tokyonight.nvim' },
   {
     'catppuccin/nvim',
     name = 'catppuccin',
-    -- priority = 1000,
-    -- init = function()
-    --   vim.cmd.colorscheme 'catppuccin-macchiato'
-    --   -- You can configure highlights by doing something like:
-    --   vim.cmd.hi 'Comment gui=none'
-    -- end,
+    priority = 1000,
+    init = function()
+      vim.cmd.colorscheme 'catppuccin-macchiato'
+      -- You can configure highlights by doing something like:
+      -- vim.cmd.hi 'Comment gui=none'
+    end,
   },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
-    priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'rose-pine-moon'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
-    end,
+    -- priority = 1000,
+    -- init = function()
+    --   vim.cmd.colorscheme 'rose-pine-moon'
+    --   vim.cmd.hi 'Comment gui=none'
+    -- end,
   },
 
   -- Highlight todo, notes, etc in comments

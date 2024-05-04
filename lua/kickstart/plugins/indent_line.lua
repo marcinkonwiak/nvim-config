@@ -10,7 +10,7 @@ return {
         show_start = false,
       },
       indent = {
-        tab_char = '',
+        -- tab_char = '▎',
       },
       exclude = {
         filetypes = {
