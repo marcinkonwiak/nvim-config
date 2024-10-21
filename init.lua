@@ -159,19 +159,27 @@ require('lazy').setup({
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>y'] = { name = 'Session', _ = 'which_key_ignore' },
-        ['<leader>u'] = { name = '[U]i', _ = 'which_key_ignore' },
-        ['<leader>p'] = { name = 'Search', _ = 'which_key_ignore' },
-        ['<leader>pn'] = { name = 'Telescope', _ = 'which_key_ignore' },
-        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-        ['<leader>gh'] = { name = '[H]unk', _ = 'which_key_ignore' },
-        ['<leader>x'] = { name = 'Lists', _ = 'which_key_ignore' },
-        ['<leader><tab>'] = { name = 'Tabs', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader><tab>', group = 'Tabs' },
+        { '<leader><tab>_', hidden = true },
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>c_', hidden = true },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>g_', hidden = true },
+        { '<leader>gh', group = '[H]unk' },
+        { '<leader>gh_', hidden = true },
+        { '<leader>p', group = 'Search' },
+        { '<leader>p_', hidden = true },
+        { '<leader>pn', group = 'Telescope' },
+        { '<leader>pn_', hidden = true },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>r_', hidden = true },
+        { '<leader>u', group = '[U]i' },
+        { '<leader>u_', hidden = true },
+        { '<leader>x', group = 'Lists' },
+        { '<leader>x_', hidden = true },
+        { '<leader>y', group = 'Session' },
+        { '<leader>y_', hidden = true },
       }
     end,
   },
